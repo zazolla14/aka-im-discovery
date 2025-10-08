@@ -1,0 +1,5 @@
+appName:
+  api: "im-discover-api"
+otel:
+  collector:
+    address: "localhost:4317"

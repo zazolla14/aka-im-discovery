@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: im-discover-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: im-discover-api
+  template:
+    metadata:
+      labels:
+        app: im-discover-api
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      containers:
+        - name: im-discover-api-container
+          image: ${IMAGE}
+          imagePullPolicy: Always
+          env:
+            - name: CONFIG_PATH
+              value: /config
+            - name: DISCOVERENV_MYSQLDB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: im-discover-mysql-secret
+                  key: mysql_openim_uri
+            - name: DISCOVERENV_MYSQLDB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: im-discover-mysql-secret
+                  key: mysql_openim_username
+            - name: DISCOVERENV_MYSQLDB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: im-discover-mysql-secret
+                  key: mysql_openim_password
+          volumeMounts:
+            - name: im-discover-config
+              mountPath: /config
+              readOnly: true
+          ports:
+            - containerPort: 10013
+      volumes:
+        - name: im-discover-config
+          configMap:
+            name: im-discover-config

@@ -1,0 +1,16 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: im-discover-services-route
+  namespace: aka-staging
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`stag-v2.akachat.me`) && PathPrefix(`/im-discover`)
+      kind: Rule
+      services:
+        - name: im-discover-api-service
+          port: 10013
+      middlewares:
+        - name: strip-im-discover-prefix

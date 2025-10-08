@@ -1,0 +1,11 @@
+# vscode
+.vscode
+
+/data/
+
+.idea
+DefaultLogger.*
+
+/vendor
+
+coverage.out

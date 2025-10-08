@@ -1,0 +1,478 @@
+basePath: /
+definitions:
+  apiresp.ApiResponse:
+    properties:
+      data: {}
+      errCode:
+        type: integer
+      errDlt:
+        type: string
+      errMsg:
+        type: string
+    type: object
+  bitbucket_org_interdigital_aka-im-discover_internal_domain.DiscoverArticles:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      deletedAt:
+        type: string
+      deletedBy:
+        type: string
+      id:
+        type: integer
+      imageUrl:
+        type: string
+      isActive:
+        type: boolean
+      linkUrl:
+        type: string
+      position:
+        type: integer
+      title:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+    type: object
+  bitbucket_org_interdigital_aka-im-discover_internal_domain.DiscoverArticlesAddReq:
+    properties:
+      createdBy:
+        type: string
+      imageUrl:
+        type: string
+      linkUrl:
+        type: string
+      position:
+        type: integer
+      title:
+        type: string
+    required:
+    - imageUrl
+    - linkUrl
+    - title
+    type: object
+  bitbucket_org_interdigital_aka-im-discover_internal_domain.DiscoverArticlesDeleteReq:
+    properties:
+      deletedBy:
+        type: string
+      id:
+        type: integer
+    required:
+    - id
+    type: object
+  bitbucket_org_interdigital_aka-im-discover_internal_domain.DiscoverArticlesEditReq:
+    properties:
+      id:
+        type: integer
+      imageUrl:
+        type: string
+      linkUrl:
+        type: string
+      position:
+        type: integer
+      title:
+        type: string
+      updatedBy:
+        type: string
+    required:
+    - id
+    type: object
+  bitbucket_org_interdigital_aka-im-discover_internal_domain.DiscoverCarousels:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      deletedAt:
+        type: string
+      deletedBy:
+        type: string
+      id:
+        type: integer
+      imageUrl:
+        type: string
+      isActive:
+        type: boolean
+      linkUrl:
+        type: string
+      position:
+        type: integer
+      title:
+        type: string
+      updatedAt:
+        type: string
+      updatedBy:
+        type: string
+    type: object
+  bitbucket_org_interdigital_aka-im-discover_internal_domain.DiscoverCarouselsAddReq:
+    properties:
+      createdBy:
+        type: string
+      imageUrl:
+        type: string
+      linkUrl:
+        type: string
+      position:
+        type: integer
+      title:
+        type: string
+    required:
+    - imageUrl
+    - linkUrl
+    - title
+    type: object
+  bitbucket_org_interdigital_aka-im-discover_internal_domain.DiscoverCarouselsDeleteReq:
+    properties:
+      deletedBy:
+        type: string
+      id:
+        type: integer
+    required:
+    - id
+    type: object
+  bitbucket_org_interdigital_aka-im-discover_internal_domain.DiscoverCarouselsEditReq:
+    properties:
+      id:
+        type: integer
+      imageUrl:
+        type: string
+      linkUrl:
+        type: string
+      position:
+        type: integer
+      title:
+        type: string
+      updatedBy:
+        type: string
+    required:
+    - id
+    type: object
+host: stag-v2.akachat.me/im-discover
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is the Discover API
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Discover API Documentation
+  version: "1.0"
+paths:
+  /bo/discover/articles/add:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new article with the given JSON payload
+      parameters:
+      - description: Article request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/bitbucket_org_interdigital_aka-im-discover_internal_domain.DiscoverArticlesAddReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Created article
+          schema:
+            $ref: '#/definitions/bitbucket_org_interdigital_aka-im-discover_internal_domain.DiscoverArticles'
+        "400":
+          description: Invalid json payload bad request
+          schema:
+            $ref: '#/definitions/apiresp.ApiResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/apiresp.ApiResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new article
+      tags:
+      - DiscoverArticles
+  /bo/discover/articles/find:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a paginated list of articles
+      parameters:
+      - description: article id
+        in: query
+        name: id
+        type: integer
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Page size
+        in: query
+        name: limit
+        type: integer
+      - default: '""'
+        description: Title name
+        in: query
+        name: title
+        type: string
+      - default: '"position"'
+        description: Sort by
+        in: query
+        name: sortBy
+        type: string
+      - default: '"ASC"'
+        description: Order by
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of articles
+          schema:
+            items:
+              $ref: '#/definitions/bitbucket_org_interdigital_aka-im-discover_internal_domain.DiscoverArticles'
+            type: array
+        "400":
+          description: Invalid pagination parameters
+          schema:
+            $ref: '#/definitions/apiresp.ApiResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/apiresp.ApiResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get paginated list of articles
+      tags:
+      - DiscoverArticles
+  /bo/discover/carousels/add:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new carousel with the given JSON payload
+      parameters:
+      - description: Carousel request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/bitbucket_org_interdigital_aka-im-discover_internal_domain.DiscoverCarouselsAddReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Created carousel
+          schema:
+            $ref: '#/definitions/bitbucket_org_interdigital_aka-im-discover_internal_domain.DiscoverCarousels'
+        "400":
+          description: Invalid json payload bad request
+          schema:
+            $ref: '#/definitions/apiresp.ApiResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/apiresp.ApiResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new carousel
+      tags:
+      - DiscoverCarousels
+  /bo/discover/carousels/find:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a paginated list of carousels
+      parameters:
+      - description: carousel id
+        in: query
+        name: id
+        type: integer
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Page size
+        in: query
+        name: limit
+        type: integer
+      - default: '""'
+        description: Title name
+        in: query
+        name: title
+        type: string
+      - default: '"position"'
+        description: Sort by
+        in: query
+        name: sortBy
+        type: string
+      - default: '"ASC"'
+        description: Order by
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of carousels
+          schema:
+            items:
+              $ref: '#/definitions/bitbucket_org_interdigital_aka-im-discover_internal_domain.DiscoverCarousels'
+            type: array
+        "400":
+          description: Invalid pagination parameters
+          schema:
+            $ref: '#/definitions/apiresp.ApiResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/apiresp.ApiResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get paginated list of carousels
+      tags:
+      - DiscoverCarousels
+  /discover/articles/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes an article by its ID
+      parameters:
+      - description: Delete request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/bitbucket_org_interdigital_aka-im-discover_internal_domain.DiscoverArticlesDeleteReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: deleted
+          schema:
+            type: string
+        "400":
+          description: Invalid json payload bad request
+          schema:
+            $ref: '#/definitions/apiresp.ApiResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/apiresp.ApiResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete an article
+      tags:
+      - DiscoverArticles
+  /discover/articles/edit:
+    post:
+      consumes:
+      - application/json
+      description: Updates an existing article
+      parameters:
+      - description: Edit request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/bitbucket_org_interdigital_aka-im-discover_internal_domain.DiscoverArticlesEditReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: updated article
+          schema:
+            type: string
+        "400":
+          description: Invalid request payload
+          schema:
+            $ref: '#/definitions/apiresp.ApiResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/apiresp.ApiResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Edit an article
+      tags:
+      - DiscoverArticles
+  /discover/carousels/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes a carousel by its ID
+      parameters:
+      - description: Delete request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/bitbucket_org_interdigital_aka-im-discover_internal_domain.DiscoverCarouselsDeleteReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: deleted
+          schema:
+            type: string
+        "400":
+          description: Invalid json payload bad request
+          schema:
+            $ref: '#/definitions/apiresp.ApiResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/apiresp.ApiResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete a carousel
+      tags:
+      - DiscoverCarousels
+  /discover/carousels/edit:
+    post:
+      consumes:
+      - application/json
+      description: Updates an existing carousel
+      parameters:
+      - description: Edit request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/bitbucket_org_interdigital_aka-im-discover_internal_domain.DiscoverCarouselsEditReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: updated article
+          schema:
+            type: string
+        "400":
+          description: Invalid request payload
+          schema:
+            $ref: '#/definitions/apiresp.ApiResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/apiresp.ApiResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Edit a carousel
+      tags:
+      - DiscoverCarousels
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: token
+    type: apiKey
+swagger: "2.0"
